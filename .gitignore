@@ -1,0 +1,5 @@
+output.css
+**/*_templ.go
+build/
+.DS_Store
+tmp/
