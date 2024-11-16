@@ -1,0 +1,14 @@
+package components
+
+import (
+	"github.com/charliekim2/progress/models"
+	"strconv"
+)
+
+templ Goal(g *models.Goal) {
+	<li>
+		<h2 class="text-2xl">{ g.Title }</h2>
+		<p>{ g.Desc }</p>
+		<p>Tasks: { strconv.Itoa(len(g.Tasks)) }</p>
+	</li>
+}

@@ -1,0 +1,18 @@
+package layouts
+
+import (
+	"github.com/charliekim2/progress/models"
+	"github.com/charliekim2/progress/views/components"
+)
+
+templ Home(goals []*models.Goal) {
+	@Base("Goals", "Your goals page") {
+		<div>
+			<ul>
+				for _, g := range goals {
+					@components.Goal(g)
+				}
+			</ul>
+		</div>
+	}
+}

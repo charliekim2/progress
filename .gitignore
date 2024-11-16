@@ -3,3 +3,4 @@ output.css
 build/
 .DS_Store
 tmp/
+.env

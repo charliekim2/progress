@@ -1,25 +1,29 @@
 package main
 
 import (
-	"context"
-	"io"
 	"log"
 	"net/http"
+	"os"
 
-	"github.com/a-h/templ"
-	"github.com/charliekim2/progress/views/layouts"
+	"github.com/charliekim2/progress/handlers"
+	"github.com/charliekim2/progress/middleware"
+	"github.com/joho/godotenv"
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	helloLayout := layouts.Hello(r.URL.Path[1:])
-	render(helloLayout, w)
-}
-
 func main() {
-	http.HandleFunc("/", handler)
-	log.Fatal(http.ListenAndServe(":8080", nil))
-}
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading env file")
+	}
 
-func render(c templ.Component, w io.Writer) {
-	c.Render(context.Background(), w)
+	mux := http.NewServeMux()
+	fs := http.FileServer(http.Dir("./css"))
+	mux.Handle("/css/", http.StripPrefix("/css/", fs))
+
+	mux.HandleFunc("/", handlers.Home)
+
+	logMux := middleware.NewLogger(mux)
+
+	addr := os.Getenv("ADDR") + ":" + os.Getenv("PORT")
+	log.Fatal(http.ListenAndServe(addr, logMux))
 }
