@@ -1,8 +1,10 @@
 package layouts
 
+import "github.com/charliekim2/progress/views/components"
+
 templ Base(title string, desc string) {
 	<!DOCTYPE html>
-	<html lang="en">
+	<html lang="en" data-theme="black">
 		<head>
 			<title>{ title }</title>
 			<meta charset="UTF-8"/>
@@ -11,6 +13,7 @@ templ Base(title string, desc string) {
 			<link rel="stylesheet" href="/css/output.css"/>
 		</head>
 		<body>
+			@components.ToggleTheme()
 			{ children... }
 		</body>
 	</html>
